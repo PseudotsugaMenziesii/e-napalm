@@ -1,0 +1,32 @@
+{
+  "name": "eNMS",
+  "version": "3.22.0",
+  "description": "A enterprise-grade vendor-agnostic network automation platform.",
+  "scripts": {
+    "prettier": "prettier --config build/linting/.prettierrc --ignore-path build/linting/.prettierignore --write eNMS/**/* setup/**/*",
+    "lint": "eslint --config build/linting/.eslintrc --ignore-path build/linting/.eslintignore ."
+  },
+  "engines": {
+    "node": "12.11.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.9.1",
+    "prettier": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/afourmy/eNMS"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Antoine Fourmy",
+  "contributors": [
+    "Antoine fourmy <antoine.fourmy@gmail.com>"
+  ],
+  "license": "GPLv3",
+  "dependencies": {
+    "lint": "^0.7.0"
+  }
+}

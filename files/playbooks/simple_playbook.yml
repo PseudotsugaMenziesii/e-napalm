@@ -1,0 +1,5 @@
+---
+- hosts: all
+  name: Simple playbook
+  gather_facts: false
+  connection: local

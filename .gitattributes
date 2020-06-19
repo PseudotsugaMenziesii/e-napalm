@@ -1,4 +1,4 @@
-static/* linguist-vendored
-templates/* linguist-vendored
-_updated/app/static/* linguist-vendored
-_updated/app/templates/* linguist-vendored
+docs/* linguist-vendored
+
+eNMS/static/lib/* linguist-vendored
+eNMS/static/fonts/* linguist-vendored

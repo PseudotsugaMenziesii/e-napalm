@@ -1,108 +1,143 @@
+<h1 align="center">eNMS</h1>
+<h2 align="center">An enterprise-grade vendor-agnostic network automation platform.</h2>
+
+___
+
+<table>
+    <thead>
+        <tr>
+            <th>Branch</th>
+            <th>Status</th>
+            <th>Coverage</th>
+            <th>Documentation</th>
+            <th>Python Style</th>
+            <th>JavaScript Style</th>
+            <th>License</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>master</td>
+            <td><a href="https://travis-ci.org/eNMS-automation/eNMS"><img src="https://travis-ci.org/eNMS-automation/eNMS.svg?branch=master" alt="Build Status (master branch)"></img></a></td>
+            <td><a href="https://coveralls.io/github/afourmy/eNMS?branch=master"><img src="https://coveralls.io/repos/github/afourmy/eNMS/badge.svg?branch=master" alt="Coverage (master branch)"></img></a></td>
+            <td><a href="https://enms.readthedocs.io/en/latest/?badge=master"><img src="https://readthedocs.org/projects/enms/badge/?version=stable" alt="Documentation (master branch)"></img></a></td>
+          <td rowspan=2><img alt="PEP8" src="https://img.shields.io/badge/code%20style-pep8-orange.svg"><br><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></td>
+          <td rowspan=2><img alt="Code style: google" src="https://img.shields.io/badge/code%20style-google-blueviolet.svg"><br><img alt="Code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg"></td>
+          <td rowspan=2><a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License"></img></a></td>
+        </tr>
+        <tr>
+            <td>develop</td>
+            <td><a href="https://travis-ci.org/eNMS-automation/eNMS"><img src="https://travis-ci.org/eNMS-automation/eNMS.svg?branch=develop" alt="Build Status (develop branch)"></img></a></td>
+            <td><a href="https://coveralls.io/github/afourmy/eNMS?branch=develop"><img src="https://coveralls.io/repos/github/afourmy/eNMS/badge.svg?branch=develop" alt="Coverage (develop branch)"></img></a></td>
+            <td><a href="https://enms.readthedocs.io/en/latest/?badge=develop"><img src="https://readthedocs.org/projects/enms/badge/?version=develop" alt="Documentation (develop branch)"></img></a></td>
+        </tr>
+    </tbody>
+</table>
+
+___
+
 # Introduction
 
-eNAPALM is a web interface for NAPALM and Netmiko.
-It allows to send scripts (plain text script or Jinja2 templates along with a YAML file) to one or more devices using netmiko or NAPALM, and to retrieve and store the output of NAPALM getters.
+eNMS is a vendor-agnostic NMS designed for building workflow-based network automation solutions.
 
-It also includes a daemon, implemented with APScheduler, for the user to retrieve NAPALM getters on a regular basis (every hour, every day, etc) or to send a script at a given point in time.
+[![eNMS](docs/_static/enms.png)](http://afourmy.pythonanywhere.com/views/geographical_view)
 
-eNAPALM is implemented with Flask, Bootstrap, jQuery, SQL Alchemy (database) and AP Scheduler (crontab-like functionnalities).
+It encompasses the following aspects of network automation:
+  - **Configuration Management Service**: Backup with Git, change and rollback of configurations.
+  - **Validation Services**: Validate data about the state of a device with Netmiko and NAPALM.
+  - **Ansible Service**: Store and run Ansible playbooks.
+  - **REST Service**: Send REST calls with variable URL and payload.
+  - **Python Script Service**: Any python script can be integrated into the web UI. eNMS will automatically generate
+a form in the UI for the script input parameters.
+  - **Workflows**: Services can be combined together graphically in a workflow.
+  - **Scheduling**: Services and workflows can be scheduled to start at a later time, or run periodically with CRON.
+  - **Event-driven automation**: Services and workflows can be triggered by an external event (REST call, Syslog message, etc).
 
-![eNAPALM](https://github.com/afourmy/e-napalm/blob/master/readme/napalm_configuration.png)
+___
+
+# Main features
+
+## 1. Network creation
+
+Your network topology can be created manually or imported from an
+external Source of Truth (OpenNMS, LibreNMS, or Netbox).
+Once created, it is displayed in a sortable and searchable table.
+A dashboard provides a graphical overview of your network with dynamic charts.
+
+Inventory                           |  Dashboard
+:----------------------------------:|:-----------------------------------:
+[![Inventory](docs/_static/base/inventory.png)](https://enms.readthedocs.io/en/develop/inventory/network_creation.html) |  [![Dashboard](docs/_static/base/dashboard.png)](https://enms.readthedocs.io/en/develop/inventory/network_creation.html)
+
+- Docs: _[Objects](https://enms.readthedocs.io/en/develop/inventory/network_creation.html)_
+
+## 2. Network visualization
+
+eNMS can display your network on a world map (Google Map or Open Street Map).
+Each device is displayed at its GPS coordinates.
+You can click on a device to display its properties, configuration, or start an SSH terminal session.
+Colocated devices can be grouped into geographical sites (campus, dacacenter, ...),
+and displayed logically with a force-directed layout.
+
+Network View                                  |  Sites View
+:--------------------------------------------:|:-------------------------------:
+[![Geographical](docs/_static/inventory/network_visualization/network_view.png)](https://enms.readthedocs.io/en/develop/inventory/network_visualization.html) |  [![Logical](docs/_static/base/site_view.png)](https://enms.readthedocs.io/en/develop/inventory/network_visualization.html)
+
+- Docs: _[Geographical View](https://enms.readthedocs.io/en/develop/inventory/network_visualization.html)_
+
+## 3. Service creation
+
+eNMS comes with a number of "default services" leveraging libraries such as `ansible`, `requests`, `netmiko`, `napalm`  to perform simple automation tasks. However, absolutely any python script can be turned into a service. If your python script takes input parameters, eNMS will automatically generate a form in the web UI.
+
+Services can be combined into a workflow.
+
+[![Workflow Builder](docs/_static/base/workflow.png)](https://enms.readthedocs.io/en/develop/automation/workflows.html)
+
+- Docs: _[Workflow System](https://enms.readthedocs.io/en/develop/automation/workflows.html)_, _[Workflow Payload](https://enms.readthedocs.io/en/latest/workflows/workflow_payload.html)_
+
+## 5. Configuration Management
+
+eNMS can work as a network device configuration backup tool and replace
+Oxidized/Rancid with the following features:
+
+  - Poll network elements and store the latest configuration in the database.
+  - Search for any text or regular-expression in all configurations.
+  - Download device configuration to a local text file.
+  - Use the REST API support to return a specified device’s configuration.
+  - Export all configurations to a remote Git repository (e.g. Gitlab)
+  - View differences between various revisions of a configuration with a git-style differences
+
+Search Configuration                          |  Compare Configuration
+:--------------------------------------------:|:-------------------------------:
+[![Search](docs/_static/base/configuration_search.png)](https://enms.readthedocs.io/en/latest/advanced/configuration_management.html) |  [![History](docs/_static/base/configuration_history.png)](https://enms.readthedocs.io/en/latest/advanced/configuration_management.html)
+
+## 6. Event-driven automation
+
+While services can be run directly and immediately from the UI, you can also schedule them to run at a later time, or periodically by defining a frequency or a CRON expression. All scheduled tasks are displayed in a calendar.
+
+[![Calendar](docs/_static/base/calendar.png)](https://enms.readthedocs.io/en/develop/automation/execution.html)
+
+Services can also be executed programmatically:
+  - eNMS has a REST API and a CLI interface that can be used to create, update and delete any type of objects,
+    but also to trigger the execution of a service.
+  - eNMS can be configured as a Syslog server, and rules can be created for syslog messages
+    to trigger the execution of a service.
+
+- Docs: _[Scheduling](https://enms.readthedocs.io/en/develop/automation/execution.html)_, _[REST API](https://enms.readthedocs.io/en/develop/advanced/rest_api.html)_
+
+___
 
 # Getting started
 
-In order to start the website, you need to run `app.py`
-```
-python app.py
-```
+## Online content
 
-You can then access the website at http://IP:5100 where IP is the IP address of the server (or http://127.0.0.1:5100 if you are running it locally).
+- An _[overview of eNMS](https://www.youtube.com/watch?v=XwU0yom_aY0&t=1205s)_ on youtube
+- A _[podcast about eNMS and network automation](https://www.pythonpodcast.com/enms-network-automation-episode-232/)_
 
-# How to
-
-## Device management
-
-The first step is to create "devices". 
-A device is defined by its hostname, IP address and operating system.
-The left-side panel allows creating devices one by one by entering those parameters manually. Devices can also be created by importing an Excel file (.xls or .xlsx) (CSV import will be implemented later).
-
-![Device management](https://github.com/afourmy/e-napalm/blob/master/readme/manage_devices.png)
-
-The device tab also includes a summary of all devices that have been created so far:
-    
-![List of all devices](https://github.com/afourmy/e-napalm/blob/master/readme/list_devices.png)
-
-## NAPALM Configuration
-
-The NAPALM configuration webpage allows the user to change the configuration of one or more devices by using NAPALM functions: load_merge, load_replace, commit, discard and rollback.
-The user has to select a transport protocol and enters its credentials (username, password and secret password if needed).
-The script can also be a Jinja2 template, in which case a YAML file has to be imported to turn the J2 template into a real script.
-
-In the right-side panel, it is possible to schedule the time when the script will be sent to the device(s). 
-If left blank, the script will be sent immediately.
-
-![NAPALM Configuration](https://github.com/afourmy/e-napalm/blob/master/readme/napalm_configuration.png)
-
-See [NAPALM tutorial](https://napalm.readthedocs.io/en/latest/tutorials/first_steps_config.html "NAPALM tutorial") for more information about those functions.
-
-## NAPALM Getters
-
-The user can choose a device and a set of getters. The query will be sent to the device and the output displayed in the middle panel. 
-
-The getters output can also be retrieved and stored on the server periodically, by selecting a frequency in the right-side panel. The output will be stored in the 'getters' folder of the application. If left blank, the getters will be retrieved immediately and the ouput display in the panel in the middle.
-
-![NAPALM Getters](https://github.com/afourmy/e-napalm/blob/master/readme/napalm_getters.png)
-
-More information about getters in [NAPALM tutorial](https://napalm.readthedocs.io/en/latest/base.html "NAPALM tutorial").
-
-## Netmiko
-
-The netmiko page provides an interface to Netmiko.
-The user select a driver and target devices, enters its credentials (username, password and secret password if needed), and sets the port and the global delay factor (default: 8022, 1).
-Just like for NAPALM, the script can be a Jinja2 template (YAML file to be imported).
-
-![Netmiko](https://github.com/afourmy/e-napalm/blob/master/readme/netmiko.png)
-
-# eNAPALM dependencies
-
-eNAPALM relies on the following libraries:
-
-* NAPALM
-* netmiko
-* jinja2
-* pyYAML
-* flask
-* flask_sqlalchemy
-* flask_apscheduler
-* xlrd
-
-Before using eNAPALM, you must make sure all these libraries are properly installed:
-
-```
-pip install napalm (dependencies: netmiko, jinja2, and pyYAML)
-pip install flask_sqlalchemy (dependencies: flask)
-pip install flask_apscheduler
-pip install xlrd
-```
-
-or 
-
-```
-pip install -r requirements.txt
-```
-
-# Credits
-
-[NAPALM](https://github.com/napalm-automation/napalm "NAPALM"): A library that implements a set of functions to interact with different network device Operating Systems using a unified API.
-
-[Netmiko](https://github.com/ktbyers/netmiko "Netmiko"): A multi-vendor library to simplify Paramiko SSH connections to network devices.
-
-[Jinja2](https://github.com/pallets/jinja "Jinja2"): A modern and designer-friendly templating language for Python.
-
-[xlrd](https://github.com/python-excel/xlrd): Library to extract data from Microsoft Excel (tm) spreadsheet files
-
-[Flask](http://flask.pocoo.org): Micro webdevelopment framework for Python.
-
-[SQLAlchemy](https://www.sqlalchemy.org): Python SQL toolkit and Object Relational Mapper
-
-[flask_apscheduler](https://github.com/viniciuschiele/flask-apscheduler): Adds APScheduler (Advanced Python Scheduler) support to Flask
+## Quick Install
+    Install python 3.6+ (earlier versions not supported)
+    git clone https://github.com/afourmy/eNMS.git
+    cd eNMS
+    pip3 install -r build/requirements/requirements.txt
+    export FLASK_APP=app.py
+    flask run --host=0.0.0.0
+    Log in (default credentials: admin / admin)

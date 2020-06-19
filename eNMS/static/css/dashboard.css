@@ -1,0 +1,14 @@
+.tile_count {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.tile_count .tile_stats_count .count {
+  font-weight: 600;
+  font-size: 55px;
+  text-align: center;
+}
+
+.tile_count .tile_stats_count span {
+  font-size: 15px;
+}
